@@ -1,0 +1,75 @@
+﻿<controls:MetroWindow x:Class="ClashRoyale_NetworkAnalyser.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ClashRoyale_NetworkAnalyser"
+        xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+        mc:Ignorable="d"
+        Title="Clash of Clans - Network analyser" Height="950" Width="1225" Closing="MetroWindow_Closing">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="20"/>
+                <RowDefinition/>
+                <RowDefinition Height="20"/>
+            </Grid.RowDefinitions>
+            <Border BorderBrush="Magenta" BorderThickness="1"></Border>
+            <TextBox DockPanel.Dock="Bottom" TextAlignment="Center" Padding="0" VerticalAlignment="Center" VerticalContentAlignment="Center" Margin="1,1,1,1"
+                                                         Text="{Binding MessageIdFilter}" Background="White" Foreground="Black" FontSize="15" KeyDown="CommitOnEnterTB_OnKeyDown"></TextBox>
+            <Button Grid.Row="3" FontSize="12" Height="20" Background="#FF838080" HorizontalContentAlignment="Center" VerticalContentAlignment="Top" Padding="0" Click="Button_Click_ReloadDefinitions">Reload Message Definitions</Button>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="90"/>
+                    <ColumnDefinition Width="35"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="300"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" TextAlignment="Center" Text="Time Stamp" FontWeight="Bold" />
+                <TextBlock Grid.Column="1" TextAlignment="Center" Text="ID" FontWeight="Bold" />
+                <TextBlock Grid.Column="2" TextAlignment="Center" Text="Message" FontWeight="Bold" />
+                <TextBlock Grid.Column="3" TextAlignment="Center" Text="Payload" FontWeight="Bold"/>
+            </Grid>
+            <ScrollViewer x:Name="Scroller" Grid.Row="2" ScrollChanged="Scroller_ScrollChanged" HorizontalScrollBarVisibility="Disabled">
+                <ListBox  ItemsSource="{Binding FilteredMessageQueueView}" SelectedItem="{Binding SelectedMessage, Mode=TwoWay}" PreviewMouseWheel="ListBox_PreviewMouseWheel">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="90"/>
+                                <ColumnDefinition Width="35"/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock HorizontalAlignment="Center" Grid.Column="0" Text="{Binding ReceivedStamp}"></TextBlock>
+                            <TextBlock HorizontalAlignment="Center" Grid.Column="1" Text="{Binding ID}"></TextBlock>
+                            <TextBlock HorizontalAlignment="Center" Grid.Column="2" Text="{Binding Name}"></TextBlock>
+                            <TextBlock HorizontalAlignment="Center" Grid.Column="3" Text="{Binding Raw}" Width="300"></TextBlock>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            </ScrollViewer>
+        </Grid>
+
+        <Border BorderBrush="AliceBlue" Grid.RowSpan="2" BorderThickness="1"></Border>
+        
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <TextBox Grid.RowSpan="2" IsReadOnly="True" Text="{Binding SelectedMessage.Content}" TextWrapping="Wrap"></TextBox>
+            <Border Grid.RowSpan="2" BorderBrush="BlueViolet" BorderThickness="1px"></Border>
+            <TextBox Grid.Row="2" IsReadOnly="True" Text="{Binding SelectedMessage.Raw}" TextWrapping="Wrap"></TextBox>
+            <Border Grid.Row="2" BorderBrush="PaleTurquoise" BorderThickness="1px" ></Border>
+        </Grid>
+    </Grid>
+</controls:MetroWindow>
+
